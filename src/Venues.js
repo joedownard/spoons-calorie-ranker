@@ -4,18 +4,30 @@ import {
 } from "react-router-dom";
 
 function VenueListItem(props) {
-    return <p> <Link to={"/venue/".concat(props.id)}> {props.name} </Link></p>;
+    const linkContainer = {
+        marginBottom: '1%',
+    }
+
+    return <div style={linkContainer}><Link to={"/venue/".concat(props.id)}> {props.name} </Link></div>;
 }
 
 function VenueList(props) {
+    const container = {
+        backgroundImage: 'url(https://www.jdwetherspoon.com/~/media/images/news/carpets/the-golden-lionjpg.jpeg)',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+    }
+
     const listItems = props.data.map((item) =>
         <VenueListItem key={item.venueId} id={item.venueId} name={item.name} />
     );
 
     return (
-        <ul>
-            {listItems}
-        </ul>
+            <div style={container}>
+                {listItems}
+            </div>
+
     );
 }
 

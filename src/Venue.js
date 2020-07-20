@@ -56,6 +56,12 @@ function FoodList(props) {
 }
 
 export function Venue() {
+    const background = {
+        backgroundImage: 'url(https://www.jdwetherspoon.com/~/media/images/news/carpets/the-golden-lionjpg.jpeg)',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+    }
     const { id } = useParams();
 
     const [spoonsMenuData, setSpoonsMenuData] = useState(0);
@@ -104,9 +110,9 @@ export function Venue() {
     } else {
         return (
             <div className="App">
-                <p>
+                <div style={background}>
                     Loading data!
-        </p>
+                </div>
             </div>
         );
     }
