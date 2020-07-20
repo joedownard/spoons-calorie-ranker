@@ -5,28 +5,53 @@ import {
 
 function FoodListItem(props) {
     const itemStyle = {
-        width: "300px",
-        border: "5px solid green",
-        margin: "20px"
+        width: '100%',
+        maxWidth: '500px',
+        border: "5px solid #279AF1",
+        borderRadius: '10px',
+        margin: '1%',
+        backgroundColor: '#F7F7FF'
     };
 
-    return <div style={itemStyle}> 
-    <p>{props.name}</p>
-    <p>{"Calories: ".concat(props.calories)} </p>
-    <p>{"Price: ".concat(props.price)} </p>
-    <p>{"Calories per £1: ".concat(props.caloriesPerPound.toFixed(0))}  </p>
+    const productText = {
+        marginLeft: '2%',
+        marginRight: '2%',
+        fontWeight: 'bold',
+        fontSize: '24px',
+        color: '#131112',
+    };
+
+    const suppText = {
+        color: '#60656F',
+    }
+
+    return <div style={itemStyle}>
+    <p style={productText}>{props.name}</p>
+    <p style={suppText}>{"Calories: ".concat(props.calories)} </p>
+    <p style={suppText}>{"Price: ".concat(props.price)} </p>
+    <p style={suppText}>{"cal/£: ".concat(props.caloriesPerPound.toFixed(0))}  </p>
     </div>;
 }
 
 function FoodList(props) {
+    const divStyle = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        backgroundImage: 'url(https://www.jdwetherspoon.com/~/media/images/news/carpets/the-golden-lionjpg.jpeg)',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+    };
     const listItems = props.data.map((item) =>
         <FoodListItem key={item.iOrderDisplayId} name={item.displayName} calories={item.calories} price={item.priceValue} caloriesPerPound={item.caloriesPerPound} />
     );
 
     return (
-        <ul>
+        <div style={divStyle}>
             {listItems}
-        </ul>
+        </div>
     );
 }
 
@@ -73,9 +98,7 @@ export function Venue() {
             return 0;
         });
         return (<div className="App">
-            <p>
                 <FoodList data={arrayData} />
-            </p>
         </div>
         );
     } else {
