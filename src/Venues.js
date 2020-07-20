@@ -23,7 +23,7 @@ export function Venues() {
     const [spoonsVenueData, setSpoonsVenueData] = useState(0);
 
     if (spoonsVenueData === 0) {
-        fetch('https://cors-anywhere.herokuapp.com/https://static.wsstack.nn4maws.net/content/v2/menus/.json')
+        fetch('https://cors-anywhere.herokuapp.com/https://static.wsstack.nn4maws.net/v1/venues/en_gb/venues.json')
             .then((response) => response.json())
             .then((responseJson) => {
                 setSpoonsVenueData(responseJson);
