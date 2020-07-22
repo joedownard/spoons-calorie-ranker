@@ -12,6 +12,8 @@ function VenueListItem(props) {
 }
 
 function VenueList(props) {
+    const [searchValue, setSearchValue] = useState("");
+    const [data, setData] = useState(props.data);
     const container = {
         backgroundImage: 'url(https://www.jdwetherspoon.com/~/media/images/news/carpets/the-golden-lionjpg.jpeg)',
         backgroundRepeat: 'no-repeat',
@@ -19,14 +21,32 @@ function VenueList(props) {
         backgroundSize: 'cover',
     }
 
-    const listItems = props.data.map((item) =>
+    const updateSearch = (event) => {
+        setSearchValue(event.target.value);
+        filterArray(event.target.value);
+    };
+
+    const filterArray = (text) => {
+        const searchedStocks = [];
+        for (const key in props.data) {
+            if (props.data.hasOwnProperty(key)) {
+                if (props.data[key].name.toLowerCase().includes(text.toLowerCase())) {
+                    searchedStocks.push(props.data[key])
+                }
+            }
+        }
+        setData(searchedStocks);
+    }
+
+    const listItems = data.map((item) => 
         <VenueListItem key={item.venueId} id={item.venueId} name={item.name} />
     );
 
     return (
-            <div style={container}>
-                {listItems}
-            </div>
+        <div style={container}>
+            <input type="text" name="Search" value={searchValue} onChange={updateSearch} />
+            {listItems}
+        </div>
 
     );
 }
@@ -39,7 +59,6 @@ export function Venues() {
             .then((response) => response.json())
             .then((responseJson) => {
                 setSpoonsVenueData(responseJson);
-                console.log(responseJson.venues);
             })
             .catch((error) => {
                 console.error(error);
