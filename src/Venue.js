@@ -7,7 +7,7 @@ function FoodListItem(props) {
     const itemStyle = {
         width: '100%',
         maxWidth: '500px',
-        border: "5px solid #279AF1",
+        border: "5px solid #77AF9C",
         borderRadius: '10px',
         margin: '1%',
         backgroundColor: '#F7F7FF'
@@ -25,11 +25,16 @@ function FoodListItem(props) {
         color: '#60656F',
     }
 
+    const calText = {
+        color: '#60656F',
+        fontWeight: 'bold',
+    }
+
     return <div style={itemStyle}>
     <p style={productText}>{props.name}</p>
-    <p style={suppText}>{"Calories: ".concat(props.calories)} </p>
-    <p style={suppText}>{"Price: ".concat(props.price)} </p>
-    <p style={suppText}>{"cal/£: ".concat(props.caloriesPerPound.toFixed(0))}  </p>
+    <p style={suppText}>{props.calories.toString().concat(" kcal")} </p>
+    <p style={suppText}>{"£".concat(props.price)} </p>
+    <p style={calText}>{"cal/£: ".concat(props.caloriesPerPound.toFixed(0))}  </p>
     </div>;
 }
 
@@ -39,10 +44,6 @@ function FoodList(props) {
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        backgroundImage: 'url(https://www.jdwetherspoon.com/~/media/images/news/carpets/the-golden-lionjpg.jpeg)',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
     };
     const listItems = props.data.map((item) =>
         <FoodListItem key={item.iOrderDisplayId} name={item.displayName} calories={item.calories} price={item.priceValue} caloriesPerPound={item.caloriesPerPound} />
@@ -56,12 +57,6 @@ function FoodList(props) {
 }
 
 export function Venue() {
-    const background = {
-        backgroundImage: 'url(https://www.jdwetherspoon.com/~/media/images/news/carpets/the-golden-lionjpg.jpeg)',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
-    }
     const { id } = useParams();
 
     const [spoonsMenuData, setSpoonsMenuData] = useState(0);
@@ -110,7 +105,7 @@ export function Venue() {
     } else {
         return (
             <div className="App">
-                <div style={background}>
+                <div>
                     Loading data!
                 </div>
             </div>

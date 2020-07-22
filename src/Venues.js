@@ -14,12 +14,6 @@ function VenueListItem(props) {
 function VenueList(props) {
     const [searchValue, setSearchValue] = useState("");
     const [data, setData] = useState(props.data);
-    const container = {
-        backgroundImage: 'url(https://www.jdwetherspoon.com/~/media/images/news/carpets/the-golden-lionjpg.jpeg)',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
-    }
 
     const updateSearch = (event) => {
         setSearchValue(event.target.value);
@@ -38,12 +32,12 @@ function VenueList(props) {
         setData(searchedStocks);
     }
 
-    const listItems = data.map((item) => 
+    const listItems = data.map((item) =>
         <VenueListItem key={item.venueId} id={item.venueId} name={item.name} />
     );
 
     return (
-        <div style={container}>
+        <div>
             <input type="text" name="Search" value={searchValue} onChange={updateSearch} />
             {listItems}
         </div>
