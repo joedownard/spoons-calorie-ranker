@@ -8,7 +8,7 @@ function VenueListItem(props) {
         marginBottom: '1%',
     }
 
-    return <div style={linkContainer}><Link to={"/venue/".concat(props.id)}> {props.name} </Link></div>;
+    return <div style={linkContainer}><Link to={"/venue/".concat(props.id)}> {props.name.concat(" (").concat(props.town).concat(")")} </Link></div>;
 }
 
 function VenueList(props) {
@@ -33,7 +33,7 @@ function VenueList(props) {
     }
 
     const listItems = data.map((item) =>
-        <VenueListItem key={item.venueId} id={item.venueId} name={item.name} />
+        <VenueListItem key={item.venueId} id={item.venueId} name={item.name} town={item.town} />
     );
 
     return (
@@ -52,6 +52,7 @@ export function Venues() {
         fetch('https://cors-anywhere.herokuapp.com/https://static.wsstack.nn4maws.net/v1/venues/en_gb/venues.json')
             .then((response) => response.json())
             .then((responseJson) => {
+                console.log(responseJson)
                 setSpoonsVenueData(responseJson);
             })
             .catch((error) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     useParams,
 } from "react-router-dom";
@@ -17,7 +17,7 @@ function FoodListItem(props) {
         marginLeft: '2%',
         marginRight: '2%',
         fontWeight: 'bold',
-        fontSize: '24px',
+        fontSize: '18px',
         color: '#131112',
     };
 
@@ -38,19 +38,46 @@ function FoodListItem(props) {
     </div>;
 }
 
-function FoodList(props) {
+function FoodList (props) {
+    const [calorieBound, setCalorieBound] = useState(0);
+    const [priceBound, setPriceBound] = useState(0);
+    useEffect(() => {
+            const filteredItems = [];
+            for (const key in props.data) {
+                if (props.data.hasOwnProperty(key)) {
+                    if (props.data[key].priceValue > priceBound && props.data[key].calories > calorieBound) {
+                        filteredItems.push(props.data[key])
+                    }
+                }
+            }
+            setData(filteredItems);
+    }, [calorieBound, priceBound, props.data]);
+
+    const [data, setData] = useState(props.data);
+
     const divStyle = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
     };
-    const listItems = props.data.map((item) =>
+
+    const listItems = data.map((item) =>
         <FoodListItem key={item.iOrderDisplayId} name={item.displayName} calories={item.calories} price={item.priceValue} caloriesPerPound={item.caloriesPerPound} />
     );
 
     return (
         <div style={divStyle}>
+            <div>
+                <label>Calories lower limit:</label>
+                <input type="number" name="Calories Bound" value={calorieBound} onChange={(event) => setCalorieBound(event.target.value)} />
+            </div>
+
+            <div>
+                <label>Price lower limit:</label>
+                <input type="number" name="Price Bound" value={priceBound} onChange={(event) => setPriceBound(event.target.value)} />
+            </div>
+
             {listItems}
         </div>
     );
