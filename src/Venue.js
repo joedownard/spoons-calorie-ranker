@@ -30,8 +30,6 @@ function FoodListItem(props) {
         fontWeight: 'bold',
     }
 
-    
-
     return <div style={itemStyle}>
     <p style={productText}>{props.name}</p>
     <p style={suppText}>{props.calories.toString().concat(" kcal")} </p>
