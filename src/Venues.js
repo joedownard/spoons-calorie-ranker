@@ -8,18 +8,12 @@ function VenueListItem(props) {
         marginBottom: '1%',
     }
 
-    return <div style={linkContainer}><Link to={"/venue/".concat(props.id)}> {props.name} </Link></div>;
+    return <div style={linkContainer}><Link to={"/venue/".concat(props.id)}> {props.name.concat(" (").concat(props.town).concat(")")} </Link></div>;
 }
 
 function VenueList(props) {
     const [searchValue, setSearchValue] = useState("");
     const [data, setData] = useState(props.data);
-    const container = {
-        backgroundImage: 'url(https://www.jdwetherspoon.com/~/media/images/news/carpets/the-golden-lionjpg.jpeg)',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
-    }
 
     const updateSearch = (event) => {
         setSearchValue(event.target.value);
@@ -38,12 +32,12 @@ function VenueList(props) {
         setData(searchedStocks);
     }
 
-    const listItems = data.map((item) => 
-        <VenueListItem key={item.venueId} id={item.venueId} name={item.name} />
+    const listItems = data.map((item) =>
+        <VenueListItem key={item.venueId} id={item.venueId} name={item.name} town={item.town} />
     );
 
     return (
-        <div style={container}>
+        <div>
             <input type="text" name="Search" value={searchValue} onChange={updateSearch} />
             {listItems}
         </div>
@@ -58,6 +52,7 @@ export function Venues() {
         fetch('https://cors-anywhere.herokuapp.com/https://static.wsstack.nn4maws.net/v1/venues/en_gb/venues.json')
             .then((response) => response.json())
             .then((responseJson) => {
+                console.log(responseJson)
                 setSpoonsVenueData(responseJson);
             })
             .catch((error) => {

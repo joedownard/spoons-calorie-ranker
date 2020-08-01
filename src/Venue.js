@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     useParams,
 } from "react-router-dom";
@@ -7,7 +7,7 @@ function FoodListItem(props) {
     const itemStyle = {
         width: '100%',
         maxWidth: '500px',
-        border: "5px solid #279AF1",
+        border: "5px solid #77AF9C",
         borderRadius: '10px',
         margin: '1%',
         backgroundColor: '#F7F7FF'
@@ -17,7 +17,7 @@ function FoodListItem(props) {
         marginLeft: '2%',
         marginRight: '2%',
         fontWeight: 'bold',
-        fontSize: '24px',
+        fontSize: '18px',
         color: '#131112',
     };
 
@@ -25,43 +25,67 @@ function FoodListItem(props) {
         color: '#60656F',
     }
 
+    const calText = {
+        color: '#60656F',
+        fontWeight: 'bold',
+    }
+
+    
+
     return <div style={itemStyle}>
     <p style={productText}>{props.name}</p>
-    <p style={suppText}>{"Calories: ".concat(props.calories)} </p>
-    <p style={suppText}>{"Price: ".concat(props.price)} </p>
-    <p style={suppText}>{"cal/£: ".concat(props.caloriesPerPound.toFixed(0))}  </p>
+    <p style={suppText}>{props.calories.toString().concat(" kcal")} </p>
+    <p style={suppText}>{"£".concat(props.price)} </p>
+    <p style={calText}>{"cal/£: ".concat(props.caloriesPerPound.toFixed(0))}  </p>
     </div>;
 }
 
-function FoodList(props) {
+function FoodList (props) {
+    const [calorieBound, setCalorieBound] = useState(0);
+    const [priceBound, setPriceBound] = useState(0);
+    useEffect(() => {
+            const filteredItems = [];
+            for (const key in props.data) {
+                if (props.data.hasOwnProperty(key)) {
+                    if (props.data[key].priceValue > priceBound && props.data[key].calories > calorieBound) {
+                        filteredItems.push(props.data[key])
+                    }
+                }
+            }
+            setData(filteredItems);
+    }, [calorieBound, priceBound, props.data]);
+
+    const [data, setData] = useState(props.data);
+
     const divStyle = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        backgroundImage: 'url(https://www.jdwetherspoon.com/~/media/images/news/carpets/the-golden-lionjpg.jpeg)',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
     };
-    const listItems = props.data.map((item) =>
+
+    const listItems = data.map((item) =>
         <FoodListItem key={item.iOrderDisplayId} name={item.displayName} calories={item.calories} price={item.priceValue} caloriesPerPound={item.caloriesPerPound} />
     );
 
     return (
         <div style={divStyle}>
+            <div>
+                <label>Calories lower limit:</label>
+                <input type="number" name="Calories Bound" value={calorieBound} onChange={(event) => setCalorieBound(event.target.value)} />
+            </div>
+
+            <div>
+                <label>Price lower limit:</label>
+                <input type="number" name="Price Bound" value={priceBound} onChange={(event) => setPriceBound(event.target.value)} />
+            </div>
+
             {listItems}
         </div>
     );
 }
 
 export function Venue() {
-    const background = {
-        backgroundImage: 'url(https://www.jdwetherspoon.com/~/media/images/news/carpets/the-golden-lionjpg.jpeg)',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
-    }
     const { id } = useParams();
 
     const [spoonsMenuData, setSpoonsMenuData] = useState(0);
@@ -110,7 +134,7 @@ export function Venue() {
     } else {
         return (
             <div className="App">
-                <div style={background}>
+                <div>
                     Loading data!
                 </div>
             </div>
