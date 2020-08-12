@@ -2,39 +2,15 @@ import React, { useState, useEffect } from 'react';
 import {
     useParams,
 } from "react-router-dom";
+import './Venue.css';
 
 function FoodListItem(props) {
-    const itemStyle = {
-        width: '100%',
-        maxWidth: '500px',
-        border: "5px solid #77AF9C",
-        borderRadius: '10px',
-        margin: '1%',
-        backgroundColor: '#F7F7FF'
-    };
 
-    const productText = {
-        marginLeft: '2%',
-        marginRight: '2%',
-        fontWeight: 'bold',
-        fontSize: '18px',
-        color: '#131112',
-    };
-
-    const suppText = {
-        color: '#60656F',
-    }
-
-    const calText = {
-        color: '#60656F',
-        fontWeight: 'bold',
-    }
-
-    return <div style={itemStyle}>
-    <p style={productText}>{props.name}</p>
-    <p style={suppText}>{props.calories.toString().concat(" kcal")} </p>
-    <p style={suppText}>{"£".concat(props.price)} </p>
-    <p style={calText}>{"cal/£: ".concat(props.caloriesPerPound.toFixed(0))}  </p>
+    return <div className="itemStyle">
+    <p className="productText" >{props.name}</p>
+    <p className="suppText"> {props.calories.toString().concat(" kcal")} </p>
+    <p sclassName="suppText"> {"£".concat(props.price)} </p>
+    <p className="calText" >{"cal/£: ".concat(props.caloriesPerPound.toFixed(0))}  </p>
     </div>;
 }
 
@@ -55,26 +31,19 @@ function FoodList (props) {
 
     const [data, setData] = useState(props.data);
 
-    const divStyle = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-    };
-
     const listItems = data.map((item) =>
         <FoodListItem key={item.iOrderDisplayId} name={item.displayName} calories={item.calories} price={item.priceValue} caloriesPerPound={item.caloriesPerPound} />
     );
 
     return (
-        <div style={divStyle}>
+        <div className="divStyle">
             <div>
-                <label>Calories lower limit:</label>
+                <label>Min Calories: </label>
                 <input type="number" name="Calories Bound" value={calorieBound} onChange={(event) => setCalorieBound(event.target.value)} />
             </div>
 
             <div>
-                <label>Price lower limit:</label>
+                <label>Min Price: </label>
                 <input type="number" name="Price Bound" value={priceBound} onChange={(event) => setPriceBound(event.target.value)} />
             </div>
 

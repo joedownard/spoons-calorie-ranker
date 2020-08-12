@@ -1,4 +1,5 @@
 import { Venues } from "./Venues.js";
+import { Venue } from "./Venue.js";
 import './App.css';
 import React from "react";
 import {
@@ -6,7 +7,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import { Venue } from "./Venue.js";
 
 export default function App() {
   return (

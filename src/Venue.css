@@ -1,0 +1,33 @@
+.productText {
+    margin-left: 2%;
+    margin-right: 2%;
+    font-weight: bold;
+    font-size: 18px;
+    color: #131112;
+}
+
+.itemStyle {
+    width: 100%;
+    max-width: 500px;
+    border: 5px solid #77AF9C;
+    border-radius: 10px;
+    margin: 1%;
+    background-color: #F7F7FF;
+};
+
+
+.suppText {
+    color: #60656F;
+}
+
+.calText {
+    color: #60656F;
+    font-weight: bold;
+}
+
+.divStyle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+};
