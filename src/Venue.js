@@ -3,6 +3,7 @@ import {
     useParams,
 } from "react-router-dom";
 import './Venue.css';
+import './App.css';
 
 function FoodListItem(props) {
 
